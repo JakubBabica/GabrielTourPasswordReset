@@ -29,7 +29,7 @@ function App() {
   
   const verifyAuthKey = async (key, clientId, email) => {
     try {
-      const response = await fetch(`http://16.16.178.5/auth/verify-key?authKey=${key}&id_Klient=${clientId}&Email=${email}`);
+      const response = await fetch(`http://85.122.161.68/auth/verify-key?authKey=${key}&id_Klient=${clientId}&Email=${email}`);
       const data = await response.json();
       if (data.message === "Authorizačný kľúč je platný.") {
         setIsKeyValid(true);
@@ -52,7 +52,7 @@ function App() {
     }
 
     try {
-      const response = await fetch('http://16.16.178.5/auth/change-password', {
+      const response = await fetch('http://85.122.161.68/auth/change-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
