@@ -11,25 +11,44 @@ function App() {
 
   
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const key = urlParams.get('Klic'); 
-    const clientId = urlParams.get('id_Klient'); 
-    const email = urlParams.get('Email'); 
-
-    if (key && clientId && email) {
-      setAuthKey(key);
-      setClientId(clientId);
-      setEmail(email);
-      verifyAuthKey(key, clientId, email); 
-  } else {
-    setMessage('URL neobsahuje požadovaný input.');
-  }
+    // Get the full path after your GitHub Pages base URL
+    const path = window.location.pathname;
+  
+    // Extract the part after "/GabrielTourPasswordReset/"
+    const paramString = path.split('/GabrielTourPasswordReset/')[1];
+  
+    // Check if we have parameters in the format `id_klient=...&Email=...&Klic=...`
+    if (paramString) {
+      const params = paramString.split('&').reduce((acc, param) => {
+        const [key, value] = param.split('=');
+        acc[key] = decodeURIComponent(value);
+        return acc;
+      }, {});
+  
+      // Extract the parameters you need
+      const key = params.Klic;
+      const clientId = params.id_klient;
+      const email = params.Email;
+  
+      if (key && clientId && email) {
+        setAuthKey(key);
+        setClientId(clientId);
+        setEmail(email);
+        verifyAuthKey(key, clientId, email);
+      } else {
+        setMessage('URL neobsahuje požadovaný input.');
+      }
+    } else {
+      setMessage('URL neobsahuje požadovaný input.');
+    }
   }, []);
 
   
-  const verifyAuthKey = async (key, clientId, email) => {
+  const verifyAuthKey = async (authKey, clientId, email) => {
     try {
-      const response = await fetch(`http://85.122.161.68/auth/verify-key?authKey=${key}&id_Klient=${clientId}&Email=${email}`);
+      console.log("i got to verifyAuth");
+      const response = await fetch(`http://16.16.178.5:9090/auth/verify-key?authKey=${authKey}&email=${email}&clientId=${clientId}`);
+                                  // 'http://localhost:9090/auth/verify-key?authKey=7B98403B&email=babica.jakub@gmail.com&clientId=9388'
       const data = await response.json();
       if (data.message === "Authorizačný kľúč je platný.") {
         setIsKeyValid(true);
