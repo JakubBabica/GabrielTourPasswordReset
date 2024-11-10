@@ -11,15 +11,12 @@ function App() {
 
   
   useEffect(() => {
-    // Get the full path after your GitHub Pages base URL
-    const path = window.location.pathname;
+    // Get the query string part after "?"
+    const paramString = window.location.search;
   
-    // Extract the part after "/GabrielTourPasswordReset/"
-    const paramString = path.split('/GabrielTourPasswordReset/')[1];
-  
-    // Check if we have parameters in the format `id_klient=...&Email=...&Klic=...`
     if (paramString) {
-      const params = paramString.split('&').reduce((acc, param) => {
+      // Remove the "?" and split the parameters
+      const params = paramString.substring(1).split('&').reduce((acc, param) => {
         const [key, value] = param.split('=');
         acc[key] = decodeURIComponent(value);
         return acc;
