@@ -11,12 +11,15 @@ function App() {
 
   
   useEffect(() => {
-    // Get the query string part after "?"
-    const paramString = window.location.search;
+    // Get the full path after your GitHub Pages base URL
+    const path = window.location.pathname;
   
+    // Extract the part after "/GabrielTourPasswordReset/"
+    const paramString = path.split('/GabrielTourPasswordReset/')[1];
+  
+    // Check if we have parameters in the format `id_klient=...&Email=...&Klic=...`
     if (paramString) {
-      // Remove the "?" and split the parameters
-      const params = paramString.substring(1).split('&').reduce((acc, param) => {
+      const params = paramString.split('&').reduce((acc, param) => {
         const [key, value] = param.split('=');
         acc[key] = decodeURIComponent(value);
         return acc;
@@ -44,7 +47,7 @@ function App() {
   const verifyAuthKey = async (authKey, clientId, email) => {
     try {
       console.log("i got to verifyAuth");
-      const response = await fetch(`http://16.16.178.5:9090/auth/verify-key?authKey=${authKey}&email=${email}&clientId=${clientId}`);
+      const response = await fetch(`http://localhost:9090/auth/verify-key?authKey=${authKey}&email=${email}&clientId=${clientId}`);
                                   // 'http://localhost:9090/auth/verify-key?authKey=7B98403B&email=babica.jakub@gmail.com&clientId=9388'
       const data = await response.json();
       if (data.message === "Authorizačný kľúč je platný.") {
