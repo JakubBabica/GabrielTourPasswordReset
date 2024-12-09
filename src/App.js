@@ -48,7 +48,7 @@ function App() {
     try {
       console.log("i got to verifyAuth");
       const response = await fetch(`http://13.53.236.35:9090/auth/verify-key?authKey=${authKey}&email=${email}&clientId=${clientId}`);
-                                  // 'http://localhost:9090/auth/verify-key?authKey=7B98403B&email=babica.jakub@gmail.com&clientId=9388'
+                                  //'http://localhost:9090/auth/verify-key?authKey=7B98403B&email=babica.jakub@gmail.com&clientId=938'
       const data = await response.json();
       if (data.message === "Authorization key is valid.") {
         setIsKeyValid(true);
