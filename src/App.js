@@ -29,7 +29,7 @@ function App() {
       const key = params.Klic;
       const clientId = params.id_klient;
       const email = params.Email;
-  
+      console.log('Extracted Parameters:', { key, clientId, email });
       if (key && clientId && email) {
         setAuthKey(key);
         setClientId(clientId);
@@ -47,10 +47,10 @@ function App() {
   const verifyAuthKey = async (authKey, clientId, email) => {
     try {
       console.log("i got to verifyAuth");
-      const response = await fetch(`http://localhost:9090/auth/verify-key?authKey=${authKey}&email=${email}&clientId=${clientId}`);
+      const response = await fetch(`http://13.53.236.35:9090/auth/verify-key?authKey=${authKey}&email=${email}&clientId=${clientId}`);
                                   // 'http://localhost:9090/auth/verify-key?authKey=7B98403B&email=babica.jakub@gmail.com&clientId=9388'
       const data = await response.json();
-      if (data.message === "Authorizačný kľúč je platný.") {
+      if (data.message === "Authorization key is valid.") {
         setIsKeyValid(true);
       } else {
         setMessage('Authorizačný kľúč je neplatný.');
@@ -71,7 +71,7 @@ function App() {
     }
 
     try {
-      const response = await fetch('http://85.122.161.68/auth/change-password', {
+      const response = await fetch('http://localhost:9090/auth/change-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
