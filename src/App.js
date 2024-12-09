@@ -71,7 +71,7 @@ function App() {
     }
 
     try {
-      const response = await fetch('http://localhost:9090/auth/change-password', {
+      const response = await fetch('http://13.53.236.35:9090/auth/change-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
